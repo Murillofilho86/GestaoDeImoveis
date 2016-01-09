@@ -1,0 +1,137 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Pesquisar</title>
+
+    <link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+
+    <script src="~/Scripts/jquery-1.9.1.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+
+
+    <script>
+
+        $(document).ready(
+            function () {
+
+
+
+                $("#btnCadastrar").click(
+                            function () {
+
+                                var model = {
+
+                                    Nome: $("#nome").val(),
+                                    Email: $("#email").val(),
+                                    Telefone: $("#telefone").val(),
+                                    Descricao: $("#descricao").val()
+                                };
+
+                                $("#mensagem").html("Enviando requisição...");
+
+
+                                $.ajax(
+                                    {
+                                        type: "POST",
+                                        url: "/Locatario/LocatarioCadastrar",
+                                        data: model,
+                                        success: function (msg) {
+
+                                            $("#mensagem").html(msg);
+
+                                        },
+                                        erro: function (ex) {
+                                            $("#mensagem").html("Erro: " + ex.status);
+                                        }
+
+                                    }
+                                 );
+                            }
+
+                    );
+
+                
+            }//Fim da function
+        )//Fim da ready
+
+    </script>
+</head>
+<body class="container">
+    <div class="well">
+        <h2 style="text-align:center">Cadastro de Locatarios</h2>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3">
+            <div>
+                <h4 style="text-align:center">Informe os Dados abaixo:</h4>
+            </div>
+
+            <label>Nome:</label>
+            <input type="text" id="nome" class="form-control"
+                   placeholder="Ex. João da Silva" /><br />
+
+            <label>Email:</label>
+            <input type="text" id="email" class="form-control"
+                   placeholder="Ex. joaodasilva@hotmail.com" /><br />
+
+            <label>Telefone:</label>
+            <input type="tel" id="telefone" class="form-control"
+                   placeholder="Ex. (21) 2222-2222" /><br />
+
+            <label>Descrição:</label>
+            <textarea type="text" id="descricao" class="form-control"
+                      placeholder="Digite aqui..." maxlength="300"></textarea><br />
+
+            <button id="btnCadastrar" class="btn btn-success btn-block">Cadastrar</button>
+            <span id="mensagem"></span>
+        </div>
+        <div class="col-md-9">
+            <table id="tabela" class="table table-hover">
+                <thead>
+                    <tr>
+                        <td>Código</td>
+                        <td>Nome</td>
+                        <td>Telefone</td>
+                        <td>Email</td>
+                        <td>Descrição</td>
+                    </tr>
+                </thead>
+
+                <tbody></tbody>
+
+                <tfoot>
+                    <tr>
+                        <td>Quantidade: <span id="qtdLocador">0</span></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+
+    <div id="janela" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-success">
+                    <h3 style="text-align: center">Informações do Locatario</h3>
+                </div>
+
+                <div class="modal-body">
+
+                </div>
+
+                <div class="modal-footer">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
